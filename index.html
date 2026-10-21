@@ -2,242 +2,354 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Breast Cancer Classification using Machine Learning, Logistic Regression, and Python.">
-  <title>Breast Cancer Classification | ML Project</title>
-  <style>
-    :root {
-      --bg: #0b0b12;
-      --panel: #151521;
-      --text: #f6f0f2;
-      --muted: #b7adbd;
-      --accent: #e7a6bc;
-      --purple: #b7a4ff;
-      --border: #302b3b;
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.7;
-    }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { color: white; }
-    .container { width: min(1080px, 90%); margin: auto; }
-
-    nav {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 22px 0; gap: 18px; flex-wrap: wrap;
-      border-bottom: 1px solid var(--border);
-    }
-    .brand { font-weight: bold; letter-spacing: .5px; }
-    .navlinks { display: flex; gap: 20px; flex-wrap: wrap; font-size: 14px; }
-
-    .hero { padding: 88px 0 68px; }
-    .eyebrow {
-      color: var(--accent); text-transform: uppercase;
-      letter-spacing: 3px; font-size: 12px; font-weight: bold;
-    }
-    h1 {
-      font-size: clamp(38px, 7vw, 68px);
-      line-height: 1.12; max-width: 850px; margin: 18px 0;
-      letter-spacing: -2px;
-    }
-    h1 span { color: var(--accent); }
-    .intro { color: var(--muted); max-width: 720px; font-size: 17px; }
-    .buttons { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 28px; }
-    .btn {
-      display: inline-block; padding: 12px 19px; border-radius: 8px;
-      border: 1px solid var(--accent); font-weight: bold; font-size: 14px;
-    }
-    .btn.primary { background: var(--accent); color: #20121a; }
-    .btn:hover { transform: translateY(-2px); }
-
-    section { padding: 54px 0; }
-    .section-title { font-size: 30px; margin: 0 0 10px; }
-    .section-desc { color: var(--muted); margin: 0 0 25px; }
-    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-    .card {
-      background: var(--panel); border: 1px solid var(--border);
-      border-radius: 15px; padding: 23px;
-    }
-    .metric { font-size: 32px; font-weight: bold; color: var(--accent); }
-    .card h3 { margin: 8px 0; }
-    .card p, li { color: var(--muted); }
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
-    .tag {
-      display: inline-block; background: #262134; color: var(--purple);
-      border-radius: 6px; padding: 5px 10px; margin: 4px;
-      font-size: 13px;
-    }
-    .steps { padding-left: 20px; }
-    .steps li { padding: 5px 0; }
-    .note {
-      border-left: 3px solid var(--accent); padding: 14px 18px;
-      background: #17131e; color: var(--muted); border-radius: 0 8px 8px 0;
-    }
-    footer {
-      border-top: 1px solid var(--border); padding: 28px 0;
-      color: var(--muted); font-size: 13px;
-    }
-    @media (max-width: 720px) {
-      .grid, .two-col { grid-template-columns: 1fr; }
-      .hero { padding-top: 58px; }
-      .navlinks { gap: 12px; }
-      h1 { letter-spacing: -1px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0b12">
+<meta name="description" content="Breast Cancer Classification using Python, Scikit-learn and Logistic Regression. An educational machine learning project by Preeti Dube.">
+<title>Breast Cancer Classification | Preeti Dube</title>
+<style>
+:root{
+  --bg:#0b0b12;--panel:#14141f;--panel2:#191827;
+  --text:#f7f1f5;--muted:#b5afc2;--pink:#e7a6bc;
+  --purple:#b8a6ff;--border:#302a3b;--green:#9de0bf;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+line-height:1.7;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,a{-webkit-tap-highlight-color:transparent}
+.container{width:min(1120px,90%);margin:auto}
+.muted{color:var(--muted)}
+.pink{color:var(--pink)}
+.purple{color:var(--purple)}
+section{padding:85px 0}
+.section-head{margin-bottom:30px}
+.eyebrow{color:var(--pink);text-transform:uppercase;letter-spacing:3px;
+font-size:11px;font-weight:800}
+h1,h2,h3,p{margin-top:0}
+h2{font-size:clamp(27px,4vw,39px);letter-spacing:-1px;line-height:1.2;margin:12px 0}
+h3{line-height:1.35}
+p{color:var(--muted)}
+nav{position:sticky;top:0;z-index:10;background:rgba(11,11,18,.88);
+backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+.nav-inner{min-height:70px;display:flex;align-items:center;
+justify-content:space-between;gap:20px}
+.brand{font-size:14px;font-weight:850;letter-spacing:.6px}
+.brand span{color:var(--pink)}
+.nav-links{display:flex;gap:24px;align-items:center;font-size:13px;color:var(--muted)}
+.nav-links a:hover,.nav-links a.active{color:var(--pink)}
+.hero{min-height:650px;display:grid;grid-template-columns:1.25fr .75fr;
+align-items:center;gap:45px;padding:85px 0 95px}
+.hero h1{font-size:clamp(43px,7vw,76px);line-height:1.04;
+letter-spacing:-3.4px;margin:18px 0 24px;max-width:760px}
+.gradient{background:linear-gradient(100deg,#f5c6d6,#c4b2ff 75%);
+-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:17px;max-width:650px;line-height:1.9}
+.badge{display:inline-flex;align-items:center;gap:8px;
+padding:7px 12px;border:1px solid var(--border);border-radius:30px;
+font-size:11px;color:var(--muted);background:#12111a}
+.dot{width:7px;height:7px;background:var(--green);border-radius:50%;
+box-shadow:0 0 12px var(--green)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:27px}
+.btn{display:inline-flex;justify-content:center;align-items:center;gap:8px;
+padding:12px 17px;border:1px solid var(--border);border-radius:9px;
+font-weight:750;font-size:13px;transition:.25s}
+.btn-primary{background:var(--pink);color:#21131b;border-color:var(--pink)}
+.btn:hover{transform:translateY(-3px);border-color:var(--pink);
+box-shadow:0 8px 28px #e7a6bc20}
+.hero-visual{position:relative;min-height:360px;display:grid;place-items:center}
+.orb{position:absolute;width:275px;height:275px;border-radius:50%;
+background:radial-gradient(circle at 35% 30%,#e7a6bc4a,transparent 62%),
+radial-gradient(circle at 70% 70%,#9c82ff30,transparent 58%);
+filter:blur(4px);animation:float 6s ease-in-out infinite}
+.visual-card{position:relative;width:min(100%,340px);padding:24px;
+background:linear-gradient(145deg,#1d1a2bdf,#11111bdd);
+border:1px solid #4a3c59;border-radius:19px;
+box-shadow:0 25px 90px #0008,0 0 50px #b8a6ff0a;backdrop-filter:blur(14px)}
+.visual-top{display:flex;justify-content:space-between;align-items:center;
+font-size:12px;color:var(--muted);margin-bottom:24px}
+.mini-dots{display:flex;gap:5px}
+.mini-dots i{width:7px;height:7px;border-radius:50%;background:var(--pink)}
+.visual-number{font-size:42px;font-weight:850;letter-spacing:-2px}
+.visual-track{height:7px;background:#343042;border-radius:10px;overflow:hidden;margin:13px 0}
+.visual-track span{display:block;height:100%;width:98.6%;
+background:linear-gradient(90deg,var(--pink),var(--purple));border-radius:10px}
+.visual-foot{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}
+.node-art{display:flex;justify-content:center;align-items:center;gap:18px;margin:27px 0 12px}
+.node-column{display:flex;flex-direction:column;gap:12px}
+.node{width:12px;height:12px;border-radius:50%;background:var(--purple);
+box-shadow:0 0 14px #b8a6ff90}
+.node.p{background:var(--pink);box-shadow:0 0 14px #e7a6bc80}
+.node-lines{color:#8f7cbf;font-size:20px;letter-spacing:3px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.card{background:linear-gradient(145deg,#171622,#11111a);
+border:1px solid var(--border);border-radius:15px;padding:24px;
+transition:transform .25s,border-color .25s,box-shadow .25s}
+.card:hover{transform:translateY(-4px);border-color:#70516c;
+box-shadow:0 15px 40px #0003}
+.card p:last-child{margin-bottom:0}
+.metric{font-size:clamp(29px,4vw,38px);font-weight:850;
+letter-spacing:-1.4px;color:var(--pink);line-height:1.25}
+.metric-label{font-size:13px;font-weight:750;margin:8px 0 3px}
+.metric-note{font-size:11px;color:var(--muted)}
+.progress{height:7px;border-radius:20px;background:#302a3a;
+overflow:hidden;margin:14px 0 8px}
+.progress span{display:block;height:100%;width:0;border-radius:20px;
+background:linear-gradient(90deg,var(--pink),var(--purple));
+transition:width 1.3s cubic-bezier(.2,.8,.2,1)}
+.progress.seen span{width:var(--value)}
+.pill{display:inline-block;border:1px solid #41364f;border-radius:6px;
+padding:5px 9px;margin:4px 4px 0 0;color:var(--purple);font-size:11px}
+.iconbox{width:43px;height:43px;border-radius:12px;display:grid;
+place-items:center;background:#292133;color:var(--pink);font-size:20px;
+margin-bottom:20px}
+.workflow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.step{position:relative;background:var(--panel);border:1px solid var(--border);
+border-radius:13px;padding:20px 15px}
+.step-no{font-size:11px;letter-spacing:2px;color:var(--pink);font-weight:850}
+.step h3{font-size:14px;margin:9px 0 5px}
+.step p{font-size:12px;margin:0}
+.chart-card{background:var(--panel);border:1px solid var(--border);
+border-radius:15px;padding:23px}
+.chart-title{font-size:15px;font-weight:800}
+.chart-sub{font-size:12px;color:var(--muted);margin:4px 0 20px}
+.matrix{display:grid;grid-template-columns:25px 1fr 1fr;gap:7px;
+align-items:stretch;text-align:center;font-size:12px}
+.matrix-label{display:grid;place-items:center;color:var(--muted);font-size:10px}
+.matrix-cell{padding:20px 5px;border-radius:8px;background:#2b2339}
+.matrix-cell strong{display:block;font-size:25px;color:var(--text)}
+.matrix-cell span{font-size:10px;color:var(--muted)}
+.matrix-cell.good{background:#69485d}
+.matrix-cell.good strong{color:#ffe4ee}
+.matrix-caption{font-size:11px;color:var(--muted);text-align:center;margin-top:12px}
+.bar-row{display:grid;grid-template-columns:90px 1fr 45px;align-items:center;
+gap:10px;margin:18px 0;font-size:12px}
+.bar-track{height:10px;background:#302a3a;border-radius:20px;overflow:hidden}
+.bar-track span{display:block;height:100%;width:0;
+background:linear-gradient(90deg,var(--pink),var(--purple));
+border-radius:20px;transition:width 1.2s ease}
+.bar-track.seen span{width:var(--value)}
+.bar-value{text-align:right;color:var(--pink);font-weight:800}
+.note{padding:16px 18px;background:#17131e;border-left:3px solid var(--pink);
+border-radius:0 8px 8px 0;font-size:12px}
+.tech-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tech{padding:19px 12px;text-align:center;border:1px solid var(--border);
+background:var(--panel);border-radius:12px;transition:.2s}
+.tech:hover{border-color:var(--pink);background:#211924}
+.tech-symbol{font-size:22px;color:var(--pink);font-weight:850}
+.tech-name{font-size:12px;font-weight:750;margin-top:8px}
+.project-link{display:inline-block;color:var(--pink);font-size:12px;
+font-weight:800;margin-top:12px}
+.project-link:hover{text-decoration:underline}
+footer{border-top:1px solid var(--border);padding:28px 0 36px}
+.footer-inner{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+footer p{font-size:12px;margin:0}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .65s,transform .65s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+#topBtn{position:fixed;right:22px;bottom:22px;z-index:9;width:42px;height:42px;
+border:1px solid #5b465f;background:#211925;color:var(--pink);
+border-radius:12px;cursor:pointer;opacity:0;pointer-events:none;transition:.2s}
+#topBtn.show{opacity:1;pointer-events:auto}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@media(prefers-reduced-motion:reduce){
+*{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+.reveal{opacity:1;transform:none}
+}
+@media(max-width:800px){
+.hero{grid-template-columns:1fr;padding:65px 0 55px;gap:5px}
+.hero-visual{min-height:300px}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.workflow{grid-template-columns:repeat(2,minmax(0,1fr))}
+.tech-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:560px){
+.container{width:91%}
+.nav-inner{align-items:flex-start;padding:16px 0;flex-direction:column;gap:10px}
+.nav-links{gap:15px;flex-wrap:wrap;font-size:12px}
+.hero h1{font-size:46px;letter-spacing:-2px}
+.grid,.two{grid-template-columns:1fr}
+.workflow{grid-template-columns:1fr 1fr}
+.tech-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+section{padding:62px 0}
+.card,.chart-card{padding:19px}
+.bar-row{grid-template-columns:75px 1fr 42px;gap:7px}
+}
+</style>
 </head>
 <body>
-  <div class="container">
-    <nav>
-      <a class="brand" href="#">PD. / MACHINE LEARNING</a>
-      <div class="navlinks">
-        <a href="#about">About</a>
-        <a href="#method">Methodology</a>
-        <a href="#results">Results</a>
-        <a href="#tech">Tech Stack</a>
-      </div>
-    </nav>
-
-    <header class="hero">
-      <div class="eyebrow">Machine Learning · Classification</div>
-      <h1>Breast Cancer <span>Classification</span></h1>
-      <p class="intro">
-        An end-to-end educational machine learning project using Python
-        and Logistic Regression to classify samples from the Wisconsin
-        Diagnostic Breast Cancer dataset.
-      </p>
-      <div class="buttons">
-        <a class="btn primary"
-           href="https://github.com/PreetiDube/Breast-Cancer-Classification/blob/main/BreastCancerClassification.ipynb"
-           target="_blank" rel="noopener">Explore Notebook ↗</a>
-        <a class="btn"
-           href="https://github.com/PreetiDube/Breast-Cancer-Classification"
-           target="_blank" rel="noopener">View Source Code ↗</a>
-      </div>
-    </header>
-
-    <section id="about">
-      <h2 class="section-title">01. About the Project</h2>
-      <p class="section-desc">
-        Turning diagnostic data into a machine learning classification result.
-      </p>
-      <div class="two-col">
-        <div class="card">
-          <h3>Project Objective</h3>
-          <p>
-            Explore diagnostic features and train a Logistic Regression
-            model to classify dataset samples as malignant or benign.
-            This project demonstrates a standard machine learning workflow.
-          </p>
-        </div>
-        <div class="card">
-          <h3>What I Built</h3>
-          <ul>
-            <li>Exploratory data analysis</li>
-            <li>Stratified training and testing split</li>
-            <li>Feature scaling and model training</li>
-            <li>Classification report and confusion matrix</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section id="results">
-      <h2 class="section-title">02. Model Results</h2>
-      <p class="section-desc">
-        Evaluation results from the notebook's held-out test set.
-      </p>
-      <div class="grid">
-        <div class="card">
-          <div class="metric">98.60%</div>
-          <h3>Test Accuracy</h3>
-          <p>Reported accuracy on 143 test samples.</p>
-        </div>
-        <div class="card">
-          <div class="metric">143</div>
-          <h3>Test Samples</h3>
-          <p>Samples used for the reported evaluation.</p>
-        </div>
-        <div class="card">
-          <div class="metric">2 Classes</div>
-          <h3>Classification</h3>
-          <p>Malignant and benign dataset labels.</p>
-        </div>
-      </div>
-      <p class="note" style="margin-top:20px">
-        Accuracy is a metric for this dataset and test split, not a guarantee
-        of performance on new patients. This educational project is not
-        intended for medical diagnosis or clinical decision-making.
-      </p>
-    </section>
-
-    <section id="method">
-      <h2 class="section-title">03. Methodology</h2>
-      <p class="section-desc">The workflow followed in the notebook.</p>
-      <div class="card">
-        <ol class="steps">
-          <li>Load and inspect the diagnostic dataset.</li>
-          <li>Explore the data and examine feature relationships.</li>
-          <li>Split data into stratified training and test sets.</li>
-          <li>Scale features as part of the model pipeline.</li>
-          <li>Train the Logistic Regression classifier.</li>
-          <li>Evaluate performance with accuracy, a classification report,
-              and a confusion matrix.</li>
-        </ol>
-      </div>
-    </section>
-
-    <section id="tech">
-      <h2 class="section-title">04. Tech Stack</h2>
-      <p class="section-desc">Tools and libraries used in the project.</p>
-      <div class="card">
-        <span class="tag">Python</span>
-        <span class="tag">Pandas</span>
-        <span class="tag">NumPy</span>
-        <span class="tag">Scikit-learn</span>
-        <span class="tag">Matplotlib</span>
-        <span class="tag">Seaborn</span>
-        <span class="tag">Jupyter Notebook</span>
-        <span class="tag">GitHub</span>
-      </div>
-    </section>
-
-    <section>
-      <h2 class="section-title">05. Explore the Project</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>Source Notebook</h3>
-          <p>Review the code, analysis, and evaluation outputs.</p>
-          <a href="https://github.com/PreetiDube/Breast-Cancer-Classification/blob/main/BreastCancerClassification.ipynb"
-             target="_blank" rel="noopener">Open notebook ↗</a>
-        </div>
-        <div class="card">
-          <h3>README</h3>
-          <p>Read the setup instructions and project documentation.</p>
-          <a href="https://github.com/PreetiDube/Breast-Cancer-Classification/blob/main/README.md"
-             target="_blank" rel="noopener">Read documentation ↗</a>
-        </div>
-        <div class="card">
-          <h3>Developer</h3>
-          <p>Explore more projects and professional work.</p>
-          <a href="https://github.com/PreetiDube"
-             target="_blank" rel="noopener">GitHub profile ↗</a>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <p>Designed as a machine learning project showcase.</p>
-      <p>© 2026 Preeti Dube · Built with HTML and CSS · Hosted with GitHub Pages</p>
-      <p>Educational use only — not a medical diagnostic tool.</p>
-    </footer>
+<nav>
+  <div class="container nav-inner">
+    <a class="brand" href="#home">PD. <span>/ MACHINE LEARNING</span></a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#results">Results</a>
+      <a href="#stack">Tech Stack</a>
+      <a href="#project">Links ↗</a>
+    </div>
   </div>
+</nav>
+
+<main>
+<header class="container hero" id="home">
+  <div>
+    <div class="badge"><span class="dot"></span> MACHINE LEARNING PROJECT</div>
+    <p class="eyebrow" style="margin-top:25px">01 — Classification · Python · Scikit-learn</p>
+    <h1>Breast Cancer <span class="gradient">Classification.</span></h1>
+    <p class="lead">Exploring diagnostic data through machine learning. An educational classification project using Logistic Regression, feature scaling and model evaluation.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="https://github.com/PreetiDube/Breast-Cancer-Classification/blob/main/BreastCancerClassification.ipynb" target="_blank" rel="noopener">Explore Notebook ↗</a>
+      <a class="btn" href="https://github.com/PreetiDube/Breast-Cancer-Classification" target="_blank" rel="noopener">Source Code ↗</a>
+    </div>
+    <p style="font-size:11px;margin-top:18px">Python • Data Analysis • Supervised Learning</p>
+  </div>
+  <div class="hero-visual" aria-label="Decorative machine learning model visualization">
+    <div class="orb"></div>
+    <div class="visual-card">
+      <div class="visual-top"><span>MODEL PERFORMANCE</span><span class="mini-dots"><i></i><i></i><i></i></span></div>
+      <div class="eyebrow">HELD-OUT TEST SET</div>
+      <div class="visual-number">98.60<span class="pink">%</span></div>
+      <div class="visual-track"><span></span></div>
+      <div class="visual-foot"><span>Logistic Regression</span><span>143 samples</span></div>
+      <div class="node-art" aria-hidden="true">
+        <div class="node-column"><i class="node"></i><i class="node p"></i><i class="node"></i><i class="node p"></i></div>
+        <div class="node-lines">╲ ╱ ╲<br>╱ ╲ ╱<br>╲ ╱ ╲</div>
+        <div class="node-column"><i class="node p"></i><i class="node"></i><i class="node p"></i></div>
+        <div class="node-lines">⟶</div>
+        <div class="node-column"><i class="node"></i><i class="node p"></i></div>
+      </div>
+      <div class="visual-foot"><span>Data → Model → Evaluation</span><span class="purple">ML / 01</span></div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+<div class="container">
+  <div class="section-head reveal"><div class="eyebrow">01 / Overview</div><h2>From raw data to <span class="gradient">insights.</span></h2><p>A structured machine learning workflow built to demonstrate classification, preprocessing and evaluation.</p></div>
+  <div class="grid">
+    <article class="card reveal"><div class="iconbox">⌕</div><h3>Exploratory analysis</h3><p>Inspect the dataset, examine feature distributions and explore relationships between diagnostic measurements.</p></article>
+    <article class="card reveal"><div class="iconbox">⌘</div><h3>Model development</h3><p>Prepare training and test data, scale numerical features and train a Logistic Regression classifier.</p></article>
+    <article class="card reveal"><div class="iconbox">▥</div><h3>Model evaluation</h3><p>Assess test performance using accuracy, a classification report and a confusion matrix.</p></article>
+  </div>
+</div>
+</section>
+
+<section id="workflow">
+<div class="container">
+  <div class="section-head reveal"><div class="eyebrow">02 / Process</div><h2>The ML <span class="gradient">pipeline.</span></h2><p>Four stages that connect data preparation to evaluation.</p></div>
+  <div class="workflow">
+    <article class="step reveal"><div class="step-no">STEP 01</div><h3>Dataset</h3><p>Load and inspect diagnostic features and target labels.</p></article>
+    <article class="step reveal"><div class="step-no">STEP 02</div><h3>Preprocessing</h3><p>Stratified split and feature scaling within the model pipeline.</p></article>
+    <article class="step reveal"><div class="step-no">STEP 03</div><h3>Training</h3><p>Fit a Logistic Regression classification model on training data.</p></article>
+    <article class="step reveal"><div class="step-no">STEP 04</div><h3>Evaluation</h3><p>Measure held-out performance and inspect classification errors.</p></article>
+  </div>
+</div>
+</section>
+
+<section id="results">
+<div class="container">
+  <div class="section-head reveal"><div class="eyebrow">03 / Evaluation</div><h2>Performance at a <span class="gradient">glance.</span></h2><p>Reported results from the notebook's held-out test set. Metrics describe this split, not guaranteed real-world performance.</p></div>
+  <div class="grid">
+    <article class="card reveal"><div class="metric">98.60%</div><div class="metric-label">Test accuracy</div><div class="progress" data-value="98.6"><span style="--value:98.6%"></span></div><div class="metric-note">143 test samples</div></article>
+    <article class="card reveal"><div class="metric">98.11%</div><div class="metric-label">Malignant precision</div><div class="progress" data-value="98.11"><span style="--value:98.11%"></span></div><div class="metric-note">Positive predictive value for the malignant class</div></article>
+    <article class="card reveal"><div class="metric">98.89%</div><div class="metric-label">Benign precision</div><div class="progress" data-value="98.89"><span style="--value:98.89%"></span></div><div class="metric-note">Positive predictive value for the benign class</div></article>
+  </div>
+  <div class="two" style="margin-top:18px">
+    <article class="chart-card reveal">
+      <div class="chart-title">Confusion matrix</div>
+      <div class="chart-sub">Rows = actual class · Columns = predicted class</div>
+      <div class="matrix" role="img" aria-label="Confusion matrix: actual malignant predicted malignant 52, predicted benign 1; actual benign predicted malignant 1, predicted benign 89.">
+        <div></div><div class="matrix-label">Pred. malignant</div><div class="matrix-label">Pred. benign</div>
+        <div class="matrix-label">Actual malignant</div>
+        <div class="matrix-cell good"><strong>52</strong><span>Correct</span></div>
+        <div class="matrix-cell"><strong>1</strong><span>Incorrect</span></div>
+        <div class="matrix-label">Actual benign</div>
+        <div class="matrix-cell"><strong>1</strong><span>Incorrect</span></div>
+        <div class="matrix-cell good"><strong>89</strong><span>Correct</span></div>
+      </div>
+      <div class="matrix-caption">Values correspond to the notebook's reported classification metrics.</div>
+    </article>
+    <article class="chart-card reveal">
+      <div class="chart-title">Precision by class</div>
+      <div class="chart-sub">Precision values reported in the classification report</div>
+      <div class="bar-row"><span>Malignant</span><div class="bar-track"><span style="--value:98.11%"></span></div><span class="bar-value">98.11%</span></div>
+      <div class="bar-row"><span>Benign</span><div class="bar-track"><span style="--value:98.89%"></span></div><span class="bar-value">98.89%</span></div>
+      <div class="note" style="margin-top:25px">Precision measures how many predictions of a class were correct. Recall and F1-score are also included in the full notebook report.</div>
+    </article>
+  </div>
+  <div class="note" style="margin-top:18px">Important: This project is for education and demonstration only. It is not a medical device and must not be used for diagnosis, screening or treatment decisions.</div>
+</div>
+</section>
+
+<section id="stack">
+<div class="container">
+  <div class="section-head reveal"><div class="eyebrow">04 / Tools</div><h2>Technology <span class="gradient">stack.</span></h2><p>Tools used for analysis, model development and visualization.</p></div>
+  <div class="tech-grid">
+    <div class="tech reveal"><div class="tech-symbol">Py</div><div class="tech-name">Python</div></div>
+    <div class="tech reveal"><div class="tech-symbol">pd</div><div class="tech-name">Pandas</div></div>
+    <div class="tech reveal"><div class="tech-symbol">Σ</div><div class="tech-name">NumPy</div></div>
+    <div class="tech reveal"><div class="tech-symbol">sk</div><div class="tech-name">Scikit-learn</div></div>
+    <div class="tech reveal"><div class="tech-symbol">▥</div><div class="tech-name">Matplotlib</div></div>
+    <div class="tech reveal"><div class="tech-symbol">sns</div><div class="tech-name">Seaborn</div></div>
+    <div class="tech reveal"><div class="tech-symbol">◫</div><div class="tech-name">Jupyter</div></div>
+    <div class="tech reveal"><div class="tech-symbol">⌘</div><div class="tech-name">GitHub</div></div>
+  </div>
+</div>
+</section>
+
+<section id="project">
+<div class="container">
+  <div class="section-head reveal"><div class="eyebrow">05 / Explore</div><h2>Take a closer <span class="gradient">look.</span></h2><p>Explore the implementation and documentation behind the project.</p></div>
+  <div class="grid">
+    <article class="card reveal"><div class="iconbox">⌘</div><h3>Source notebook</h3><p>Explore the code, analysis, model evaluation and notebook outputs.</p><a class="project-link" href="https://github.com/PreetiDube/Breast-Cancer-Classification/blob/main/BreastCancerClassification.ipynb" target="_blank" rel="noopener">OPEN NOTEBOOK ↗</a></article>
+    <article class="card reveal"><div class="iconbox">▤</div><h3>Documentation</h3><p>Read the project overview, dependencies and setup instructions.</p><a class="project-link" href="https://github.com/PreetiDube/Breast-Cancer-Classification/blob/main/README.md" target="_blank" rel="noopener">READ README ↗</a></article>
+    <article class="card reveal"><div class="iconbox">↗</div><h3>More projects</h3><p>Discover more work and repositories on my GitHub profile.</p><a class="project-link" href="https://github.com/PreetiDube" target="_blank" rel="noopener">VISIT GITHUB ↗</a></article>
+  </div>
+</div>
+</section>
+</main>
+
+<footer>
+<div class="container footer-inner">
+  <p>© 2026 Preeti Dube · Machine Learning Project Showcase</p>
+  <p><a class="pink" href="https://github.com/PreetiDube" target="_blank" rel="noopener">GitHub ↗</a> &nbsp;·&nbsp; Built with HTML & CSS</p>
+</div>
+</footer>
+<button id="topBtn" aria-label="Back to top" title="Back to top">↑</button>
+<script>
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      entry.target.querySelectorAll('.progress,.bar-track').forEach(el => el.classList.add('seen'));
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, {threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+document.querySelectorAll('.progress,.bar-track').forEach(el => {
+  if (!el.closest('.reveal')) el.classList.add('seen');
+});
+const sections = document.querySelectorAll('main section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+const sectionObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(link => link.classList.toggle(
+        'active', link.getAttribute('href') === '#' + entry.target.id
+      ));
+    }
+  });
+}, {rootMargin:'-25% 0px -65% 0px'});
+sections.forEach(section => sectionObserver.observe(section));
+const topBtn = document.getElementById('topBtn');
+window.addEventListener('scroll', () => {
+  topBtn.classList.toggle('show', window.scrollY > 450);
+}, {passive:true});
+topBtn.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+</script>
 </body>
 </html>
