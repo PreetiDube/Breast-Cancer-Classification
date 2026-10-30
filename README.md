@@ -39,3 +39,10 @@ Run the notebook cells from top to bottom. The model metrics are generated when 
 ## Limitations
 
 This is a small benchmark dataset and a basic baseline model. Test-set metrics alone do not prove clinical validity, fairness, or generalization to real-world clinical settings.
+
+
+Author
+Preeti Dube
+
+GitHub: PreetiDube
+Project Repository: Breast Cancer Classification with Machine Learning
